@@ -1,0 +1,147 @@
+html {
+	font-size: 13px;
+}
+body {
+	margin: 0;
+}
+#contents {
+	margin: 1rem;
+}
+
+/*상단 메뉴바*/
+.p-menubar.gnb {
+	border-radius: 0 0 6px 6px;
+}
+.p-menubar.gnb .p-menubar-root-list .p-menuitem .router-link-active {
+	border: 1px solid #c0c0c0;
+}
+
+/*primevue form*/
+.p-error {
+	color: #e24c4c !important;
+}
+
+/*primevue label*/
+.p-normal-label {
+	position: relative;
+}
+.p-normal-label > label {
+	position: absolute;
+	margin-top:-0.7rem;
+	left:0.75rem;
+	top:-0.75rem;
+	font-size:0.85rem;
+	color: #6c757d;
+}
+
+/*primevue select button*/
+.p-selectbutton.grid {
+	display: grid;
+	row-gap:0.4rem;
+	column-gap: 0.4rem;
+	flex-wrap: unset;
+	margin-right: 0;
+	margin-left: 0;
+	margin-top: 0;
+}
+.p-selectbutton.grid.col-2,
+.p-selectbutton.grid.col-3,
+.p-selectbutton.grid.col-4,
+.p-selectbutton.grid.col-5,
+.p-selectbutton.grid.col-6 {
+	flex:none;
+	padding:0;
+	width:auto;
+}
+.p-selectbutton.grid.col-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+.p-selectbutton.grid.col-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+.p-selectbutton.grid.col-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+.p-selectbutton.grid.col-5 {
+	grid-template-columns: repeat(5, 1fr);
+}
+.p-selectbutton.grid.col-6 {
+	grid-template-columns: repeat(6, 1fr);
+}
+.p-selectbutton.grid .p-button {
+	margin:0;
+	border-radius: 6px !important;
+	border:1px solid #ced4da;
+}
+.p-selectbutton.p-invalid > .p-button {
+	border:1px solid #e24c4c;
+}
+
+/*primevue datatable*/
+.p-datatable th.text-center .p-column-title {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+.p-datatable .p-datatable-tbody > tr > td.p-cell-editing {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.p-datatable.bordered th,
+.p-datatable.bordered td {
+	border: 1px solid #dee2e6 !important;
+}
+.p-datatable.condensed th,
+.p-datatable.condensed td {
+	padding: 0.75rem !important;
+}
+.p-datatable.font-small {
+	font-size: 0.9rem !important;
+}
+
+@media screen and (max-width: 960px) {
+	html {
+		font-size: 16px;
+	}
+	/*상단 메뉴바/사이드바*/
+	.p-menubar.gnb {
+		border-radius: 0;
+		border-width: 0 0 1px 0;
+	}
+	.p-sidebar {
+		width: 75%;
+	}
+	.p-sidebar .p-sidebar-content {
+		padding-top: 1.25rem !important;
+	}
+
+	/*primevue label*/
+	.p-normal-label > label {
+		position: absolute;
+		margin-top:-0.7rem;
+		left:0.75rem;
+		top:-0.75rem;
+		font-size:0.75rem;
+		color: #6c757d;
+	}
+
+	/*primevue datatable*/
+	.p-datatable .p-datatable-tbody > tr > td.p-cell-editing {
+		padding-top: 0.2rem !important;
+		padding-bottom:0.2rem !important;
+	}
+	.p-datatable .p-datatable-tbody .p-column-title {
+		text-align: left !important;
+	}
+	.p-datatable.bordered td:not(:last-child) {
+		border-width: 0 0 1px 0 !important;
+	}
+	.p-datatable.bordered td:last-child {
+		border-width: 0 0 3px 0 !important;
+	}
+
+	/*primevue calendar*/
+	.p-datepicker.p-datepicker-touch-ui {
+		min-width: 95vw;
+	}
+}
