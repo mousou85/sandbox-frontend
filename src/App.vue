@@ -1,95 +1,86 @@
+<script setup lang="ts">
+import {RouterLink, RouterView} from 'vue-router'
+
+import HelloWorld from './components/HelloWorld.vue'
+</script>
+
 <template>
-  <template v-if="routeName == 'login'">
-    <main class="block h-screen">
-      <Login></Login>
-    </main>
-  </template>
-  <template v-else>
-    <header class="block">
-      <Menu></Menu>
-    </header>
-    <main id="contents" class="block">
-      <router-view></router-view>
-    </main>
-  </template>
+  <header>
+    <img alt="Vue logo" class="logo" src="assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
 </template>
 
-<script>
-//vue core
-import {useStore} from "vuex";
-import {computed, onMounted, watch} from 'vue';
-import {useRoute} from "vue-router";
+<style scoped>
+header {
+  line-height: 1.5;
+  max-height: 100vh;
+}
 
-//vuex custom module
-import {investHistory} from "@/store/investHistory";
+.logo {
+  display: block;
+  margin: 0 auto 2rem;
+}
 
-//custom components
-import Menu from '@/components/Menu.vue';
-import Login from '@/components/Login.vue';
+nav {
+  width: 100%;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 2rem;
+}
 
-export default {
-  components: {
-    Menu,
-    Login,
-  },
-  setup(props) {
-    //set vars: vuex, route
-    const store = useStore();
-    const route = useRoute();
+nav a.router-link-exact-active {
+  color: var(--color-text);
+}
 
-    //set vars: route name
-    const routeName = computed(() => route.name);
+nav a.router-link-exact-active:hover {
+  background-color: transparent;
+}
 
-    /*
-    life cycle hook
-     */
-    onMounted(() => {
-      /*
-      load/resize 이벤트에 모바일 여부 설정 메소드 설정
-       */
-      window.addEventListener('load', () => {
-        setMobileFlag();
-      });
+nav a {
+  display: inline-block;
+  padding: 0 1rem;
+  border-left: 1px solid var(--color-border);
+}
 
-      window.addEventListener('resize', () => {
-        setMobileFlag();
-      });
-    });
+nav a:first-of-type {
+  border: 0;
+}
 
-    /*
-    watch variables
-     */
-    watch(routeName, (newRouteName, oldRouteName) => {
-      //load vuex module
-      if (oldRouteName != newRouteName) {
-        //invest history
-        const invest = ['investHistory', 'investCompany', 'investItem', 'investUnit'];
-        if (invest.includes(newRouteName)) {
-          if (!store.hasModule('investHistory')) {
-            store.registerModule('investHistory', investHistory);
-          }
-        } else {
-          if (store.hasModule('investHistory')) {
-            store.unregisterModule('investHistory');
-          }
-        }
-      }
-    });
+@media (min-width: 1024px) {
+  header {
+    display: flex;
+    place-items: center;
+    padding-right: calc(var(--section-gap) / 2);
+  }
 
-    /**
-     * 모바일 여부 설정
-     */
-    const setMobileFlag = () => {
-      if (window.innerWidth >= 1024) {
-        store.dispatch('setMobile', false);
-      } else {
-        store.dispatch('setMobile', true);
-      }
-    }
+  .logo {
+    margin: 0 2rem 0 0;
+  }
 
-    return {
-      routeName,
-    }
+  header .wrapper {
+    display: flex;
+    place-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  nav {
+    text-align: left;
+    margin-left: -1rem;
+    font-size: 1rem;
+
+    padding: 1rem 0;
+    margin-top: 1rem;
   }
 }
-</script>
+</style>
