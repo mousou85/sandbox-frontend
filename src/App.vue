@@ -1,7 +1,32 @@
 <script setup lang="ts">
-import {RouterLink, RouterView} from 'vue-router'
+import {onMounted} from 'vue';
+import {RouterLink, RouterView} from 'vue-router';
 
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+
+import {useGlobalStore} from '@/stores/global.store';
+
+const store = useGlobalStore();
+
+/*
+ * life cycle hook
+ */
+onMounted(() => {
+  /*
+   * load/resize 이벤트에 모바일 여부 설정 메소드 설정
+   */
+  window.addEventListener('load', () => {
+    setMobileFlag();
+  });
+
+  window.addEventListener('resize', () => {
+    setMobileFlag();
+  });
+});
+
+const setMobileFlag = () => {
+  store.isMobile = window.innerWidth <= 1024;
+};
 </script>
 
 <template>
@@ -14,6 +39,7 @@ import HelloWorld from './components/HelloWorld.vue'
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
   </header>
