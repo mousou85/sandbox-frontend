@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import {onMounted} from 'vue';
-import {RouterLink, RouterView} from 'vue-router';
+import {RouterView, useRoute} from 'vue-router';
 
-import HelloWorld from './components/HelloWorld.vue';
+import {useGlobalStore} from '@/stores';
 
-import {useGlobalStore} from '@/stores/global.store';
-
+//set store, router
 const store = useGlobalStore();
+const route = useRoute();
 
 /*
  * life cycle hook
@@ -30,7 +30,10 @@ const setMobileFlag = () => {
 </script>
 
 <template>
-  <header>
+  <template v-if="route.name == 'login'"> 1 </template>
+  <template v-else> 2 </template>
+
+  <!--<header>
     <img alt="Vue logo" class="logo" src="assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
@@ -42,7 +45,7 @@ const setMobileFlag = () => {
         <RouterLink to="/login">Login</RouterLink>
       </nav>
     </div>
-  </header>
+  </header>-->
 
   <RouterView />
 </template>
