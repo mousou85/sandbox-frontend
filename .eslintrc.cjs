@@ -37,5 +37,13 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
-  }
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: false,
+        project: './tsconfig.json',
+      },
+    },
+  },
 }
