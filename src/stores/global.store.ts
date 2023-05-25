@@ -17,11 +17,11 @@ interface IGlobalStoreState {
   /**
    * 액세스 토큰
    */
-  accessToken?: string;
+  accessToken: string;
   /**
    * 리프레시 토큰
    */
-  refreshToken?: string;
+  refreshToken: string;
   /**
    * 로그인 유저 정보
    */
@@ -49,6 +49,8 @@ export const useGlobalStore = defineStore('globalStore', {
   state: (): IGlobalStoreState => ({
     isMobile: false,
     siteName: '',
+    accessToken: '',
+    refreshToken: '',
     user: {
       isLoggedIn: false,
       data: {
@@ -72,6 +74,8 @@ export const useGlobalStore = defineStore('globalStore', {
      * 로그아웃 처리
      */
     doLogout() {
+      this.accessToken = '';
+      this.refreshToken = '';
       this.user.isLoggedIn = false;
       this.user.data = {
         userIdx: 0,
