@@ -2,7 +2,7 @@ import {computed} from 'vue';
 import {createRouter, createWebHistory} from 'vue-router';
 
 import {useGlobalStore} from '@/stores';
-import HomeView from '@/views/HomeView.vue';
+import IndexView from '@/views/IndexView.vue';
 
 /**
  * 라우터 정의
@@ -14,7 +14,10 @@ export default function () {
       {
         path: '/',
         name: 'index',
-        component: HomeView,
+        component: IndexView,
+        meta: {
+          needLogin: true,
+        },
       },
       {
         path: '/about',
@@ -27,7 +30,7 @@ export default function () {
       {
         path: '/login',
         name: 'login',
-        component: () => import('@/views/LoginView.vue'),
+        component: () => import('@/views/user/LoginView.vue'),
       },
     ],
   });
@@ -47,6 +50,8 @@ export default function () {
     if (needLogin && !isLoggedIn.value) {
       next({name: 'login'});
     }
+
+    next();
   });
 
   return router;

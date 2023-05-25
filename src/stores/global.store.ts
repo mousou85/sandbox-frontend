@@ -13,7 +13,7 @@ interface IGlobalStoreState {
   /**
    * 사이트 이름
    */
-  SITE_NAME: string;
+  siteName: string;
   /**
    * 액세스 토큰
    */
@@ -39,7 +39,7 @@ interface IUserStoreState {
   /**
    * 유저 정보
    */
-  data?: IUserInfo;
+  data: IUserInfo;
 }
 
 /**
@@ -48,9 +48,15 @@ interface IUserStoreState {
 export const useGlobalStore = defineStore('globalStore', {
   state: (): IGlobalStoreState => ({
     isMobile: false,
-    SITE_NAME: '',
+    siteName: '',
     user: {
       isLoggedIn: false,
+      data: {
+        userIdx: 0,
+        name: '',
+        id: '',
+        useOtp: 'n',
+      },
     },
   }),
   actions: {
@@ -67,7 +73,12 @@ export const useGlobalStore = defineStore('globalStore', {
      */
     doLogout() {
       this.user.isLoggedIn = false;
-      this.user.data = undefined;
+      this.user.data = {
+        userIdx: 0,
+        id: '',
+        name: '',
+        useOtp: 'n',
+      };
     },
   },
 });

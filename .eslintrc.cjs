@@ -22,8 +22,9 @@ module.exports = {
     'import/order': [
       'error',
       {
-        alphabetize: {order: 'asc'},
-        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+        alphabetize: {order: 'asc', caseInsensitive: true},
+        groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index'], 'unknown'],
+        pathGroupsExcludedImportTypes: [],
         pathGroups: [
           {
             pattern: '@/**/*.ts',
