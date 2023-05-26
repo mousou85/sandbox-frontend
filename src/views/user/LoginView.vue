@@ -7,10 +7,13 @@ import Password from 'primevue/password';
 import {reactive, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
+import {ApiError, AuthApi} from '@/modules/api';
 import {useGlobalStore} from '@/stores';
 
 const globalStore = useGlobalStore();
 const router = useRouter();
+
+const authApi = new AuthApi();
 
 const siteName = globalStore.siteName;
 
@@ -39,8 +42,59 @@ const otpFormFlag = ref(false);
 //set vars: error message box
 const messageBox = ref('');
 
-const doLogin = async () => {};
+//set func: 로그인 처리
+const doLogin = async () => {
+  let isValid = true;
+  messageBox.value = '';
 
+  //폼 데이터 체크
+  if (!formData.id) {
+    isValid = false;
+    formData.validate.id.valid = false;
+    formData.validate.id.msg = 'ID를 입력해주세요.';
+  } else {
+    formData.validate.id.valid = true;
+    formData.validate.id.msg = '';
+  }
+  if (!formData.password) {
+    isValid = false;
+    formData.validate.password.valid = false;
+    formData.validate.password.msg = 'PASSWORD를 입력해주세요.';
+  } else {
+    formData.validate.password.valid = true;
+    formData.validate.password.msg = '';
+  }
+
+  if (!isValid) return;
+
+  try {
+    const response = await authApi.login(formData.id, formData.password);
+    const data = response.data;
+
+    if ('needOTPVerify' in data) {
+      otpFormFlag.value = true;
+    } else {
+      globalStore.doLogin({
+        userIdx: data.userIdx,
+        id: data.id,
+        name: data.name,
+        useOtp: data.useOtp,
+      });
+      globalStore.accessToken = data.accessToken;
+      globalStore.refreshToken = data.refreshToken;
+
+      // await router.push({name: 'index'});
+    }
+  } catch (error) {
+    if (error instanceof ApiError) {
+      messageBox.value = error.message;
+    } else {
+      messageBox.value = String(error);
+    }
+  }
+};
+
+//set func: OTP 인증
 const verifyOTP = async () => {};
 </script>
 
