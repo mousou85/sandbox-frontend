@@ -10,13 +10,16 @@ import {useRouter} from 'vue-router';
 import {ApiError, AuthApi} from '@/modules/api';
 import {useGlobalStore} from '@/stores';
 
+//set vars: store, router
 const globalStore = useGlobalStore();
 const router = useRouter();
 
+//set vars: api module
 const authApi = new AuthApi();
 
 const siteName = globalStore.siteName;
 
+//set vars: login form data
 const formData = reactive({
   id: '',
   password: '',
@@ -37,6 +40,7 @@ const formData = reactive({
   },
 });
 
+//set vars: use OTP flag
 const otpFormFlag = ref(false);
 
 //set vars: error message box
@@ -83,19 +87,46 @@ const doLogin = async () => {
       globalStore.accessToken = data.accessToken;
       globalStore.refreshToken = data.refreshToken;
 
-      // await router.push({name: 'index'});
+      await router.push({name: 'index'});
     }
   } catch (error) {
-    if (error instanceof ApiError) {
-      messageBox.value = error.message;
-    } else {
-      messageBox.value = String(error);
-    }
+    messageBox.value = error instanceof ApiError ? error.message : String(error);
   }
 };
 
 //set func: OTP 인증
-const verifyOTP = async () => {};
+const verifyOTP = async () => {
+  let isValid = true;
+  messageBox.value = '';
+
+  if (!formData.authToken) {
+    isValid = false;
+    formData.validate.authToken.valid = false;
+    formData.validate.authToken.msg = 'OTP코드를 입력해주세요.';
+  } else {
+    formData.validate.authToken.valid = true;
+    formData.validate.authToken.msg = '';
+  }
+  if (!isValid) return;
+
+  try {
+    const response = await authApi.verifyOTP(formData.id, formData.password, formData.authToken);
+    const data = response.data;
+
+    globalStore.doLogin({
+      userIdx: data.userIdx,
+      id: data.id,
+      name: data.name,
+      useOtp: data.useOtp,
+    });
+    globalStore.accessToken = data.accessToken;
+    globalStore.refreshToken = data.refreshToken;
+
+    await router.push({name: 'index'});
+  } catch (error) {
+    messageBox.value = error instanceof ApiError ? error.message : String(error);
+  }
+};
 </script>
 
 <template>
