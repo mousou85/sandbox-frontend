@@ -2,11 +2,12 @@
 import {onMounted} from 'vue';
 import {RouterView, useRoute} from 'vue-router';
 
+import TopMenu from '@/components/TopMenu.vue';
 import {useGlobalStore} from '@/stores';
 import LoginView from '@/views/user/LoginView.vue';
 
 //set store, router
-const store = useGlobalStore();
+const globalStore = useGlobalStore();
 const route = useRoute();
 
 /*
@@ -26,7 +27,7 @@ onMounted(() => {
 });
 
 const setMobileFlag = () => {
-  store.isMobile = window.innerWidth <= 1024;
+  globalStore.isMobile = window.innerWidth <= 1024;
 };
 </script>
 
@@ -37,7 +38,7 @@ const setMobileFlag = () => {
     </main>
   </template>
   <template v-else>
-    <header class="block">1</header>
+    <header class="block"><TopMenu /></header>
     <main id="contents" class="block"><RouterView /></main>
   </template>
 
