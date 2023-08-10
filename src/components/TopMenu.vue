@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import Button from 'primevue/button';
 import Menubar from 'primevue/menubar';
+import PanelMenu from 'primevue/panelmenu';
+import Sidebar from 'primevue/sidebar';
 import SplitButton from 'primevue/splitbutton';
 import {computed, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
-import {routeList} from '@/router';
 import {useGlobalStore} from '@/stores';
 
 const globalStore = useGlobalStore();
@@ -19,18 +20,26 @@ const isLogin = computed(() => globalStore.user.isLoggedIn);
 //set vars: menu
 const topMenuList = ref([
   {
-    key: routeList.index.name,
-    label: routeList.index.label,
-    icon: routeList.index.topMenuIcon,
-    to: routeList.index.path,
-  },
-  {
-    key: routeList.invest.name,
-    label: routeList.invest.label,
-    icon: routeList.invest.topMenuIcon,
+    key: 'home',
+    label: 'Home',
+    icon: 'pi pi-home',
     to: '/',
   },
+  {
+    key: 'invest',
+    label: 'Invest',
+    icon: 'pi pi-dollar',
+    items: [
+      {key: 'invest-history', label: 'history', to: '/invest/history'},
+      {key: 'invest-group', label: 'group', to: '/invest/group'},
+      {key: 'invest-item', label: 'item', to: '/invest/item'},
+      {key: 'invest-unit', label: 'unit', to: '/invest/unit'},
+    ],
+  },
 ]);
+
+//set vars: sidebar flag
+const showSidebar = ref(false);
 
 //set vars: logout menu
 const logoutMenuList = ref([]);
@@ -69,7 +78,36 @@ const logout = () => {
       </template>
     </Menubar>
   </template>
-  <template v-else></template>
+  <template v-else>
+    <div class="p-menubar gnb">
+      <a class="p-menubar-button" @click="showSidebar = !showSidebar">
+        <i class="pi pi-bars"></i>
+      </a>
+      <div class="flex flex-grow-1 align-content-center">
+        <h1 class="text-base flex-grow-1 text-center">{{ siteName }}</h1>
+      </div>
+    </div>
+    <Sidebar v-model:visible="showSidebar" position="left">
+      <template #header>
+        <template v-if="isLogin">
+          <SplitButton
+            label="LOGOUT"
+            icon="pi pi-sign-out"
+            class="p-button-sm p-button-outlined p-button-rounded p-button-danger"
+            :model="logoutMenuList"
+            @click="logout"></SplitButton>
+        </template>
+        <template v-else>
+          <Button
+            label="LOGIN"
+            class="p-button-sm p-button-outlined p-button-rounded p-button-info"
+            icon="pi pi-sign-in"
+            @click="login"></Button>
+        </template>
+      </template>
+      <PanelMenu :model="topMenuList"> </PanelMenu>
+    </Sidebar>
+  </template>
 </template>
 
 <style scoped>
