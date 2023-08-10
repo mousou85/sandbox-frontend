@@ -11,9 +11,10 @@ import * as qs from 'qs';
 import type {Router} from 'vue-router';
 import {useRouter} from 'vue-router';
 
-import {ApiError} from '@/modules/api/apiError';
-import type {IReissueTokenResponse} from '@/modules/api/interfaces';
 import {useGlobalStore} from '@/stores';
+
+import {ApiError} from './apiError';
+import type {IReissueTokenResponse} from './interfaces';
 
 const AUTH_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 

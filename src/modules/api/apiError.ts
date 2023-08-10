@@ -1,6 +1,6 @@
 import {AxiosError} from 'axios';
 
-import type {IErrorResponse} from '@/modules/api/interfaces';
+import type {IErrorResponse} from './interfaces';
 
 /**
  * API error exception class
