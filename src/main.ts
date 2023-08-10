@@ -3,7 +3,7 @@ import PrimeVue from 'primevue/config';
 import {createApp} from 'vue';
 
 import App from '@/App.vue';
-import locale_ko from '@/i18n/ko.json';
+import locale_ko from '@/i18n_test/ko.json';
 import {router} from '@/router';
 import {useGlobalStore} from '@/stores/global.store';
 
