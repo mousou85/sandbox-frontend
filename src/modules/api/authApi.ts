@@ -23,7 +23,7 @@ export class AuthApi extends ApiBase {
    * @param password
    */
   async login(userId: string, password: string) {
-    return await this.post<ILoginResponse | INeedOtpVerifyResponse>('/auth/login', {
+    return this.post<ILoginResponse | INeedOtpVerifyResponse>('/auth/login', {
       userId,
       password,
     });
@@ -36,7 +36,7 @@ export class AuthApi extends ApiBase {
    * @param token
    */
   async verifyOTP(userId: string, password: string, token: string) {
-    return await this.post<ILoginResponse>('/auth/verify-otp', {userId, password, token});
+    return this.post<ILoginResponse>('/auth/verify-otp', {userId, password, token});
   }
 
   /**
@@ -44,6 +44,6 @@ export class AuthApi extends ApiBase {
    * @param refreshToken
    */
   async reissueToken(refreshToken: string) {
-    return await this.post<IReissueTokenResponse>('/auth/reissue-token', {refreshToken});
+    return this.post<IReissueTokenResponse>('/auth/reissue-token', {refreshToken});
   }
 }
