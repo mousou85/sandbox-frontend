@@ -7,10 +7,15 @@ import SplitButton from 'primevue/splitbutton';
 import {computed, ref} from 'vue';
 import {useRouter} from 'vue-router';
 
+import OtpDialog from '@/components/user/OtpDialog.vue';
 import {useGlobalStore} from '@/stores';
 
+//set vars: store, router
 const globalStore = useGlobalStore();
 const router = useRouter();
+
+//set vars: component
+const cOtpDialog = ref<InstanceType<typeof OtpDialog>>();
 
 //set vars: constants
 const siteName = computed(() => globalStore.siteName);
@@ -42,17 +47,24 @@ const topMenuList = ref([
 const showSidebar = ref(false);
 
 //set vars: logout menu
-const logoutMenuList = ref([]);
+const logoutMenuList = ref([
+  {
+    label: 'OTP Setting',
+    command: () => {
+      cOtpDialog.value?.toggleDialog('show');
+    },
+  },
+]);
 
 //set func: login
 const login = () => {
-  router.push({name: routeList.login.name});
+  router.push({name: 'login'});
 };
 
 //set func: logout
 const logout = () => {
   globalStore.doLogout();
-  router.push({name: routeList.login.name});
+  router.push({name: 'login'});
 };
 </script>
 
@@ -108,6 +120,8 @@ const logout = () => {
       <PanelMenu :model="topMenuList"> </PanelMenu>
     </Sidebar>
   </template>
+
+  <OtpDialog ref="cOtpDialog" />
 </template>
 
 <style scoped>
@@ -117,5 +131,18 @@ const logout = () => {
 
 .p-menubar.gnb .p-menubar-root-list .p-menuitem .router-link-active {
   border: 1px solid #c0c0c0;
+}
+
+@media screen and (max-width: 960px) {
+  .p-menubar.gnb {
+    border-radius: 0;
+    border-width: 0 0 1px 0;
+  }
+  .p-sidebar {
+    width: 75%;
+  }
+  .p-sidebar .p-sidebar-content {
+    padding-top: 1.25rem !important;
+  }
 }
 </style>

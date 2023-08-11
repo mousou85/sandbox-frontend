@@ -1,5 +1,7 @@
 import {createPinia} from 'pinia';
 import PrimeVue from 'primevue/config';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
 import {createApp} from 'vue';
 
 import App from '@/App.vue';
@@ -21,6 +23,8 @@ app.use(PrimeVue, {
   ripple: true,
   locale: locale_ko.ko,
 });
+app.use(ConfirmationService);
+app.use(ToastService);
 
 //set store: global store
 const globalStore = useGlobalStore();

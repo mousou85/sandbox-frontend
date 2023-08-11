@@ -7,3 +7,35 @@ body {
 #contents {
 	margin: 1rem;
 }
+
+
+
+/*primevue label*/
+.p-normal-label {
+	position: relative;
+}
+.p-normal-label > label {
+	position: absolute;
+	margin-top:-0.7rem;
+	left:0.75rem;
+	top:-0.75rem;
+	font-size:0.85rem;
+	color: #6c757d;
+}
+
+
+@media screen and (max-width: 960px) {
+	html {
+		font-size: 16px;
+	}
+
+	/*primevue label*/
+	.p-normal-label > label {
+		position: absolute;
+		margin-top:-0.7rem;
+		left:0.75rem;
+		top:-0.75rem;
+		font-size:0.75rem;
+		color: #6c757d;
+	}
+}
