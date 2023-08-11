@@ -84,5 +84,16 @@ export const useGlobalStore = defineStore('globalStore', {
         useOtp: 'n',
       };
     },
+    /**
+     * 유저 정보 설정
+     * @param payload
+     */
+    setUserInfo(payload: Partial<IUserInfo>) {
+      const {userIdx, name, id, useOtp} = payload;
+      if (userIdx) this.user.data.userIdx = userIdx;
+      if (name) this.user.data.name = name;
+      if (id) this.user.data.id = id;
+      if (useOtp) this.user.data.useOtp = useOtp;
+    },
   },
 });
