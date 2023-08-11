@@ -1,6 +1,6 @@
 import type {RouteRecordRaw} from 'vue-router';
 
-export default <RouteRecordRaw[]>[
+export const investRoutes: RouteRecordRaw[] = [
   {
     name: 'invest',
     path: '/invest',

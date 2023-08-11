@@ -1,2 +1,2 @@
-export {default as mainRoute} from './main';
-export {default as investRoute} from './invest';
+export * from './main';
+export * from './invest';

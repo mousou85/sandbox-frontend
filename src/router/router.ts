@@ -3,7 +3,7 @@ import {createRouter, createWebHistory} from 'vue-router';
 
 import {useGlobalStore} from '@/stores';
 
-import {investRoute, mainRoute} from './route';
+import {investRoutes, mainRoutes} from './route';
 
 /**
  * 라우터 정의
@@ -11,7 +11,7 @@ import {investRoute, mainRoute} from './route';
 export default function () {
   const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
-    routes: [...mainRoute, ...investRoute],
+    routes: [...mainRoutes, ...investRoutes],
   });
 
   //set store
